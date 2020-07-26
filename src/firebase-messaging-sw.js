@@ -1,0 +1,3 @@
+let config = {
+  "gcm_sender_id": "800408515429"
+}
