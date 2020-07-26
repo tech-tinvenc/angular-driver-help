@@ -1,0 +1,7 @@
+---
+applications :
+- name: "angular-driver-help"
+  path : "dist"
+  memory : 256M
+  buildpack :
+  - "https://github.com/cloudfoundry/staticfile-buildpack.git"
