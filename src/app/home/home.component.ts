@@ -16,8 +16,15 @@ export class HomeComponent implements OnInit {
     submitted = false;
     latitude: String;
     longitude: String;
+    pretext: String;
+    pretextEnabled: boolean;
     users = [];
-
+    urgencyLevels = [
+    {level: "Very Urgent", pretext: "Expect help within 30 minutes"},
+    {level: "Urgent", pretext: "Expect help within one hour"},
+    {level: "Medium", pretext: "Expect help within to 3 hours"},
+    {level: "Low", pretext: "Expect help within 6 hours"}
+    ]
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
@@ -30,14 +37,18 @@ export class HomeComponent implements OnInit {
         this.currentUser = this.authenticationService.currentUserValue;
         this.getLocation();
 
+
     }
 
     ngOnInit() {
         this.crisisPostForm = this.formBuilder.group({
-            request: ['', Validators.required]
+            request: ['', Validators.required],
+            urgency: ['', Validators.required]
         });
         this.currentUser = this.authenticationService.currentUserValue;
         this.getLocation();
+        this.pretextEnabled = false;
+        this.pretext = "this is the text";
     }
 
     get f() { return this.crisisPostForm.controls; }
@@ -68,6 +79,8 @@ export class HomeComponent implements OnInit {
         this.crisisRequest.deviceId= this.currentUser.token;
         this.crisisRequest.message = this.crisisPostForm.value.request;
         this.crisisRequest.messageType = "Request";
+        this.crisisRequest.urgency = this.crisisPostForm.value.urgency;
+        this.crisisRequest.userName = this.currentUser.firstName+" "+this.currentUser.lastName;
 
         this.crisisRequestService.save(this.crisisRequest)
             .pipe(first())
@@ -81,4 +94,6 @@ export class HomeComponent implements OnInit {
                     this.loading = false;
                 });
     }
+
+
 }

@@ -12,6 +12,7 @@ export class UserService {
     }
 
     register(user: User) {
+        user.token = localStorage.getItem('messagingToken');
         return this.http.post(`${config.apiUrl}/users/register`, user);
     }
 

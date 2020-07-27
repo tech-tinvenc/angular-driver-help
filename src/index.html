@@ -29,9 +29,10 @@
                     onclick="requestPermission()">Request Permission</button>
           </div>
           <!-- div to display messages received by this app. -->
-          <div id="messages"></div>
+
         </div>
       </div>
+      <div id="messages"></div>
 </body>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
@@ -141,9 +142,11 @@ firebase.analytics()
   function sendTokenToServer(currentToken) {
     if (!isTokenSentToServer()) {
       console.log('Sending token to server...');
+      window.localStorage.setItem('messagingToken',currentToken);
       // TODO(developer): Send the current token to your server.
       setTokenSentToServer(true);
     } else {
+      window.localStorage.setItem('messagingToken',currentToken);
       console.log('Token already sent to server so won\'t send it again ' +
           'unless it changes');
     }

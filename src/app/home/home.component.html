@@ -4,14 +4,32 @@
 <form [formGroup]="crisisPostForm" (ngSubmit)="onSubmit()">
 <div class="form-group">
     <label for="request">Request Message</label>
-    <textarea formControlName="request" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.request.errors }"  rows="10"></textarea>
+    <textarea formControlName="request" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.request.errors }"  rows="6"></textarea>
     <div *ngIf="submitted && f.request.errors" class="invalid-feedback">
         <div *ngIf="f.request.errors.required">Request Message is required</div>
     </div>
 </div>
 <div class="form-group">
+    <label for="urgency">Urgency</label>
+    <select formControlName="urgency" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.urgency.errors }">
+      <option *ngFor="let urgencyLevel of urgencyLevels" >{{urgencyLevel.level}}</option>
+    </select>
+    <!-- small id="urgencyNote" class="form-text text-muted">{{pretext}}</small -->
+    <div *ngIf="submitted && f.request.errors" class="invalid-feedback">
+        <div *ngIf="f.request.errors.required">Urgency is required</div>
+    </div>
+</div>
+
+<div class="form-group">
     <button [disabled]="loading" class="btn btn-primary">
         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
         Post
     </button>
+</div>
+</form>
+<div>
+  <div>Urgency level Note:</div>
+  <ul>
+    <li *ngFor="let urgencyLevel of urgencyLevels" > <b>{{urgencyLevel.level}} :</b> {{urgencyLevel.pretext}}</li>
+  </ul>
 </div>

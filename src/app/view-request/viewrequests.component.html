@@ -1,7 +1,20 @@
 <h3>View Requests</h3>
 <ul class="list-group">
     <li class="list-group-item" *ngFor="let crisisInfo of crisisInfos">
-        {{crisisInfo.message}}  By ({{crisisInfo.userId}}  at {{crisisInfo.createdAt}})
-        - <a (click)="reply(user.id)" class="text-danger">Reply</a>
+      <div class="card">
+        <div class="card-header">
+          Featured
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{crisisInfo.message}}</h5>
+          <p class="card-text">{{crisisInfo.userId}}</p>
+          <div class="text-right">
+          <a (click)="reply(user.id)" class="btn btn-primary">Reply</a>
+        </div>
+        <div class="text-muted">
+          created on: {{crisisInfo.createdAt}}
+        </div>
+        </div>
+      </div>
     </li>
 </ul>

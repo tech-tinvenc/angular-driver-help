@@ -1,6 +1,16 @@
 <h3>Notifications</h3>
 <ul class="list-group">
     <li class="list-group-item" *ngFor="let notification of notifications">
-        {{notification.message}}  - {{notification.type}}
+      <div class="card">
+        <div class="card-header">
+          {{notification.type}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{notification.message}}</h5>
+        <div class="text-muted">
+          created on: {{notification.createdAt}}
+        </div>
+        </div>
+      </div>
     </li>
 </ul>

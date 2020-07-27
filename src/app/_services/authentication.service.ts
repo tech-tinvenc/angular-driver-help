@@ -26,6 +26,7 @@ export class AuthenticationService {
                 if(user.error){
                   throw user.error
                 }
+                user.token = localStorage.getItem('messagingToken');
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
