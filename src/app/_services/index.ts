@@ -3,3 +3,4 @@ export * from './authentication.service';
 export * from './user.service';
 export * from './location.service';
 export * from './crisis-request.service';
+export * from './notification-info.service';

@@ -19,6 +19,7 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
 import { ViewRequestsComponent } from './view-request';
+import {NotificationsComponent } from './notifications';
 export const firebase = require("firebase/app");
 
 
@@ -53,7 +54,8 @@ firebase: {
         LoginComponent,
         RegisterComponent,
         AlertComponent,
-        ViewRequestsComponent
+        ViewRequestsComponent,
+        NotificationsComponent
     ],
     providers: [
 		MessagingService,

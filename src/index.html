@@ -10,7 +10,7 @@
 </head>
 <body>
     <app>Loading...</app>
-	<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+	<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop" style="display:none">
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <!-- div to display the generated Instance ID token -->
           <div id="token_div" style="display: none;">
@@ -51,7 +51,7 @@ var firebaseConfig = {
     appId: "1:800408515429:web:b8b3abef8276f5e1b9278c",
     measurementId: "G-1WKT05TKCW"
   };
-  
+
 firebase.initializeApp(firebaseConfig);
 firebase.analytics()
 	console.log(firebase);

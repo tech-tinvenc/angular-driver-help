@@ -19,11 +19,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             .pipe(dematerialize());
 
         function handleRoute() {
+        console.log (url);
+        console.log (url.match(/\/notifications\/\d+$/));
             switch (true) {
                 //case url.endsWith('/users/authenticate') && method === 'POST':
                   //  return authenticate();
-                //case url.endsWith('/users/register') && method === 'POST':
-                  //  return register();
+                case url.endsWith('vincent_a') && method === 'GET':
+                    return notifications();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
                 case url.match(/\/users\/\d+$/) && method === 'DELETE':
@@ -35,7 +37,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         // route functions
-
+        function notifications(){
+          return ok({
+            notifications: [
+            {
+              message: "You are about to enter the containment zone",
+              type: "Alert"
+            },
+            {
+              message: "Near by User Ranjith is need of some help",
+              type: "Request"
+            }
+            ]
+          });
+        }
         function authenticate() {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
