@@ -4,5 +4,9 @@
     message: string;
     messageType: string;
     deviceId: string;
-    createAt: string;
+    createdAt: string;
+}
+
+export class CrisisInfos{
+    crisisRequests: []
 }

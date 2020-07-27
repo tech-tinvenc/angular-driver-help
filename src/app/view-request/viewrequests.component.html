@@ -1,7 +1,7 @@
 <h3>View Requests</h3>
-<ul>
-    <li *ngFor="let user of users">
-        {{user.username}} ({{user.firstName}} {{user.lastName}})
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let crisisInfo of crisisInfos">
+        {{crisisInfo.message}}  By ({{crisisInfo.userId}}  at {{crisisInfo.createdAt}})
+        - <a (click)="reply(user.id)" class="text-danger">Reply</a>
     </li>
 </ul>

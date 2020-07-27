@@ -2,36 +2,36 @@
 import { first } from 'rxjs/operators';
 
 import { User } from '@/_models';
-import { UserService, AuthenticationService } from '@/_services';
+import { CrisisRequestService, AuthenticationService } from '@/_services';
 
 @Component({ templateUrl: 'viewrequests.component.html' })
 export class ViewRequestsComponent implements OnInit {
     currentUser: User;
     latitude: String;
     longitude: String;
-    users = [];
+    crisisInfos = [];
 
     constructor(
         private authenticationService: AuthenticationService,
-        private userService: UserService,
+        private crisisRequestService: CrisisRequestService,
     ) {
-        this.currentUser = this.authenticationService.currentUserValue;
+
 
     }
 
     ngOnInit() {
-        this.loadAllUsers();
+        this.loadAllRequests();
     }
 
     deleteUser(id: number) {
-        this.userService.delete(id)
+        this.crisisRequestService.delete(id)
             .pipe(first())
-            .subscribe(() => this.loadAllUsers());
+            .subscribe(() => this.loadAllRequests());
     }
 
-    private loadAllUsers() {
-        this.userService.getAll()
+    private loadAllRequests() {
+        this.crisisRequestService.getAll()
             .pipe(first())
-            .subscribe(users => this.users = users);
+            .subscribe(crisissInfos => this.crisisInfos = crisissInfos.crisisRequests);
     }
 }

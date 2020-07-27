@@ -1,14 +1,14 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { User, CrisisRequest, CrisisInfo } from '@/_models';
+import { User, CrisisRequest, CrisisInfo,CrisisInfos } from '@/_models';
 
 @Injectable({ providedIn: 'root' })
 export class CrisisRequestService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<CrisisInfo[]>(`${config.apiUrl}/crisis`);
+        return this.http.get<CrisisInfos>(`${config.apiUrl}/crisis/all`);
     }
 
     save(crisisRequest: CrisisRequest) {
