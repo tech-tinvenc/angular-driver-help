@@ -3,11 +3,11 @@
     <li class="list-group-item" *ngFor="let crisisInfo of crisisInfos">
       <div class="card">
         <div class="card-header">
-          Featured
+          {{crisisInfo.urgen}}
         </div>
         <div class="card-body">
           <h5 class="card-title">{{crisisInfo.message}}</h5>
-          <p class="card-text">{{crisisInfo.userId}}</p>
+          <p class="card-text"> - {{crisisInfo.createdBy}}</p>
           <div class="text-right">
           <a (click)="reply(user.id)" class="btn btn-primary">Reply</a>
         </div>

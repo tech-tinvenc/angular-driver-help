@@ -1,6 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { timer, of, Observable, Subject } from 'rxjs';
+import { switchMap, takeUntil, catchError } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
@@ -8,7 +10,7 @@ import { User,CrisisRequest } from '@/_models';
 import { AlertService, UserService, AuthenticationService, LocationService, CrisisRequestService } from '@/_services';
 
 @Component({ templateUrl: 'home.component.html' })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
     currentUser: User;
     crisisPostForm: FormGroup;
     crisisRequest: CrisisRequest;
@@ -54,7 +56,7 @@ export class HomeComponent implements OnInit {
     get f() { return this.crisisPostForm.controls; }
 
     getLocation(){
-      this.locationService.getPosition().then(pos=>
+      this.locationService.populateLatLong().then(pos=>
       {
        this.latitude = pos.lng;
        this.longitude = pos.lat;
@@ -88,6 +90,7 @@ export class HomeComponent implements OnInit {
                 data => {
                     this.alertService.success('Request Posted to group.', true);
                     this.router.navigate(['/']);
+                    this.loading = false;
                 },
                 error => {
                     this.alertService.error(error);
@@ -95,5 +98,23 @@ export class HomeComponent implements OnInit {
                 });
     }
 
+    // Kill subject to stop all requests for component
+    private killTrigger: Subject<void> = new Subject();
+    private publishLocation$: Observable<any> = this.locationService.getPosition(this.currentUser);
+
+    private refreshInterval$: Observable<any> = timer(0, 1000)
+    .pipe(
+      // This kills the request if the user closes the component
+      takeUntil(this.killTrigger),
+      // switchMap cancels the last request, if no response have been received since last tick
+      switchMap(() => this.publishLocation$),
+      // catchError handles http throws
+      catchError(error => of('Error'))
+    );
+    public statustext$: Observable<any> = this.refreshInterval$;
+
+    ngOnDestroy(){
+      this.killTrigger.next();
+    }
 
 }
