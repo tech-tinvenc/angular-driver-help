@@ -6,8 +6,8 @@ import {  Notifications } from '@/_models';
 export class NotificationInfoService {
   constructor(private http: HttpClient) { }
 
-  
+
   getAll(id: String) {
-    return this.http.get<Notifications>(`${config.apiUrl}/notifications?userId=${id}`);
+    return this.http.post<Notifications>(`${config.apiUrl}/notifications`,{userId: id});
   }
 }

@@ -27,6 +27,7 @@ public currentUser: Observable<User>;
 
     return from(this.populateLatLong()).pipe(map(pos=>
     {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     console.log(JSON.stringify(pos));
     return this.http.post<any>(`${config.apiUrl}/location/gather`, { userid:this.currentUserSubject.value.id, latitude:pos.lat, longitude: pos.lng }).subscribe()
     }));
