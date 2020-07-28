@@ -1,8 +1,9 @@
 ﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { timer, of, Observable, Subject } from 'rxjs';
+import { timer, of, Observable, Subject,interval, Subscription } from 'rxjs';
 import { switchMap, takeUntil, catchError } from 'rxjs/operators';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
@@ -10,7 +11,10 @@ import { User,CrisisRequest } from '@/_models';
 import { AlertService, UserService, AuthenticationService, LocationService, CrisisRequestService } from '@/_services';
 
 @Component({ templateUrl: 'home.component.html' })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
+
+    subscription: Subscription;
+
     currentUser: User;
     crisisPostForm: FormGroup;
     crisisRequest: CrisisRequest;
@@ -51,6 +55,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getLocation();
         this.pretextEnabled = false;
         this.pretext = "this is the text";
+
+
+      const source = interval(30000);
+      const text = 'Your Text Here';
+      this.subscription = source.subscribe(val => this.locationService.getPosition(this.currentUser).subscribe(x=>{console.log("yes")}));
     }
 
     get f() { return this.crisisPostForm.controls; }
@@ -98,11 +107,11 @@ export class HomeComponent implements OnInit, OnDestroy {
                 });
     }
 
-    // Kill subject to stop all requests for component
+    /*// Kill subject to stop all requests for component
     private killTrigger: Subject<void> = new Subject();
     private publishLocation$: Observable<any> = this.locationService.getPosition(this.currentUser);
 
-    private refreshInterval$: Observable<any> = timer(0, 1000)
+    private refreshInterval$: Observable<any> = timer(0, 10)
     .pipe(
       // This kills the request if the user closes the component
       takeUntil(this.killTrigger),
@@ -113,8 +122,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
     public statustext$: Observable<any> = this.refreshInterval$;
 
+    refreshInterval$.subscribe(x =>{
+      console.log(x);
+    });
+
     ngOnDestroy(){
       this.killTrigger.next();
-    }
+    }*/
 
 }

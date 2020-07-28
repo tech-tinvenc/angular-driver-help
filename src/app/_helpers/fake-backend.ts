@@ -20,7 +20,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function handleRoute() {
         console.log (url);
-        console.log (url.match(/\/notifications\/\d+$/));
+//        console.log (url.match(/\/notifications\/\d+$/));
             switch (true) {
                 //case url.endsWith('/users/authenticate') && method === 'POST':
                   //  return authenticate();
