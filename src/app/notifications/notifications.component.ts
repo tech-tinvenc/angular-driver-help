@@ -20,7 +20,7 @@ export class NotificationsComponent implements OnInit {
 
     ngOnInit() {
         this.currentUser = this.authenticationService.currentUserValue
-        this.loadAllRequests(this.currentUser.id);
+        this.loadAllRequests(this.currentUser.id+"");
     }
 
 
